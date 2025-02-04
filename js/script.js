@@ -13,14 +13,8 @@ document.getElementById('form-login').addEventListener('submit', async function(
     if (error) {
         alert('Login falhou: ' + error.message);
     } else {
-        // Esconde as seções de login e cadastro
-        document.getElementById('login').style.display = 'none';
-        document.getElementById('cadastro').style.display = 'none';
-        // Mostra a seção de cursos
-        document.getElementById('cursos').style.display = 'block';
-        document.getElementById('tutoriais').style.display = 'block';
-        // Rola a página para a seção de cursos
-        window.location.href = '#cursos';
+        // Redireciona para a página de cursos
+        window.location.href = 'cursos.html';
     }
 });
 
@@ -38,17 +32,7 @@ document.getElementById('form-cadastro').addEventListener('submit', async functi
         // Insere o usuário na tabela 'usuarios'
         await client.from('usuarios').insert([{ nome, email }]);
         alert('Cadastro realizado com sucesso!');
-        // Esconde as seções de login e cadastro
-        document.getElementById('login').style.display = 'none';
-        document.getElementById('cadastro').style.display = 'none';
-        // Mostra a seção de cursos
-        document.getElementById('cursos').style.display = 'block';
-        document.getElementById('tutoriais').style.display = 'block';
-        // Rola a página para a seção de cursos
-        window.location.href = '#cursos';
+        // Redireciona para a página de cursos
+        window.location.href = 'cursos.html';
     }
 });
-
-function inscreverCurso(nomeCurso) {
-    alert(`Inscrição no curso "${nomeCurso}" realizada com sucesso!`);
-}
