@@ -12,55 +12,39 @@
         <nav>
             <a href="#login">Login</a>
             <a href="#cadastro">Cadastre-se</a>
-            <a href="#cursos">Cursos</a>
-            <a href="#tutoriais">Tutoriais</a>
+            <a href="cursos.html">Cursos</a>
         </nav>
     </header>
 
-    <section id="login">
-        <h2>Login</h2>
-        <form id="form-login">
-            <input type="email" id="login-email" placeholder="E-mail" required>
-            <input type="password" id="login-senha" placeholder="Senha" required>
-            <button type="submit">Entrar</button>
-        </form>
-    </section>
+    <main>
+        <section id="bem-vindo">
+            <h2>Bem-vindo ao Capacita Idosos!</h2>
+            <p>Um espaço dedicado a ajudar idosos a utilizar a tecnologia de forma simples e eficiente.</p>
+        </section>
 
-    <section id="cadastro">
-        <h2>Cadastre-se</h2>
-        <form id="form-cadastro">
-            <input type="text" id="nome" placeholder="Nome" required>
-            <input type="email" id="email" placeholder="E-mail" required>
-            <input type="password" id="senha" placeholder="Senha" required>
-            <button type="submit">Cadastrar</button>
-        </form>
-    </section>
+        <section id="login">
+            <h2>Login</h2>
+            <form id="form-login">
+                <input type="email" id="login-email" placeholder="E-mail" required>
+                <input type="password" id="login-senha" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+        </section>
 
-    <section id="cursos" style="display:none;">
-        <h2>Cursos Disponíveis</h2>
-        <div id="lista-cursos">
-            <div class="curso">
-                <h3>Introdução ao Smartphone</h3>
-                <p>Aprenda a usar seu smartphone desde o básico até recursos avançados.</p>
-                <button onclick="inscreverCurso('Introdução ao Smartphone')">Inscrever-se</button>
-            </div>
-            <div class="curso">
-                <h3>Redes Sociais para Iniciantes</h3>
-                <p>Descubra como usar Facebook, Instagram e WhatsApp.</p>
-                <button onclick="inscreverCurso('Redes Sociais para Iniciantes')">Inscrever-se</button>
-            </div>
-        </div>
-    </section>
+        <section id="cadastro">
+            <h2>Cadastre-se</h2>
+            <form id="form-cadastro">
+                <input type="text" id="nome" placeholder="Nome" required>
+                <input type="email" id="email" placeholder="E-mail" required>
+                <input type="password" id="senha" placeholder="Senha" required>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </section>
+    </main>
 
-    <section id="tutoriais" style="display:none;">
-        <h2>Tutoriais Rápidos</h2>
-        <div>
-            <h3>Como Compartilhar Fotos e Vídeos</h3>
-            <p>Passo a passo para compartilhar mídias em redes sociais.</p>
-            <h3>Teclas de Atalho</h3>
-            <p>Ctrl+C (Copiar), Ctrl+V (Colar), Ctrl+Z (Desfazer).</p>
-        </div>
-    </section>
+    <footer>
+        <p>&copy; 2023 Capacita Idosos. Todos os direitos reservados.</p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/script.js"></script>
