@@ -3,13 +3,26 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// Verifica se o usuário já está logado ao carregar a página
+async function checkAuth() {
+    const { data: { user }, error } = await client.auth.getUser();
+
+    if (user) {
+        // Se o usuário estiver logado, redireciona para a página de cursos
+        window.location.href = 'cursos.html';
+    }
+}
+
+// Executa a verificação ao carregar a página
+checkAuth();
+
 document.getElementById('form-login').addEventListener('submit', async function(event) {
     event.preventDefault();
     const email = document.getElementById('login-email').value;
     const senha = document.getElementById('login-senha').value;
 
     try {
-        const { user, error } = await client.auth.signIn({ email, password: senha });
+        const { user, error } = await client.auth.signInWithPassword({ email, password: senha });
 
         if (error) {
             throw error; // Lança o erro para ser capturado no catch
