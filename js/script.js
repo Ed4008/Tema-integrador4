@@ -23,6 +23,11 @@ document.getElementById('form-cadastro').addEventListener('submit', async functi
             throw new Error(authError.message || "Erro ao criar usuário na autenticação");
         }
 
+        // Verifique se o usuário foi criado com sucesso
+        if (!user) {
+            throw new Error("Usuário não foi criado corretamente.");
+        }
+
         // Passo 2: Inserir dados na tabela 'usuarios'
         console.log("Inserindo dados na tabela 'usuarios'...");
         const { data, error: dbError } = await client
@@ -45,34 +50,5 @@ document.getElementById('form-cadastro').addEventListener('submit', async functi
     } catch (error) {
         console.error("Detalhes do erro:", error);
         alert('Erro no cadastro: ' + (error.message || "Erro desconhecido"));
-    }
-});
-
-document.getElementById('form-login').addEventListener('submit', async function(event) {
-    event.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const senha = document.getElementById('login-senha').value;
-
-    try {
-        console.log("Iniciando login...");
-
-        // Passo 1: Autenticar o usuário no Supabase Auth
-        const { user, error: authError } = await client.auth.signIn({ 
-            email, 
-            password: senha 
-        });
-
-        console.log("Resposta do Supabase Auth:", { user, authError });
-
-        if (authError) {
-            throw new Error(authError.message || "Erro ao autenticar usuário");
-        }
-
-        alert('Login realizado com sucesso!');
-        window.location.href = 'cursos.html';
-
-    } catch (error) {
-        console.error("Detalhes do erro:", error);
-        alert('Erro no login: ' + (error.message || "Erro desconhecido"));
     }
 });
