@@ -1,6 +1,6 @@
 // Configuração do Supabase
-const supabaseUrl = 'SUA_URL_DO_SUPABASE';
-const supabaseKey = 'SUA_CHAVE_PUBLICA_DO_SUPABASE';
+const supabaseUrl = 'https://zziqvyaqorsuxxyruiwr.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6aXF2eWFxb3JzdXh4eXJ1aXdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg3MDE2MTQsImV4cCI6MjA1NDI3NzYxNH0.fkcuUJp9uhxKdoGniDk3V0quSpwMZL2gr8GcxMXCYgQ';
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 // Função para realizar o login
