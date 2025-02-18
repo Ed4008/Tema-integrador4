@@ -1,52 +1,78 @@
 // Configuração do Supabase
-const supabaseUrl = 'https://zziqvyaqorsuxxyruiwr.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6aXF2eWFxb3JzdXh4eXJ1aXdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg3MDE2MTQsImV4cCI6MjA1NDI3NzYxNH0.fkcuUJp9uhxKdoGniDk3V0quSpwMZL2gr8GcxMXCYgQ';
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+const SUPABASE_URL = 'https://zziqvyaqorsuxxyruiwr.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6aXF2eWFxb3JzdXh4eXJ1aXdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg3MDE2MTQsImV4cCI6MjA1NDI3NzYxNH0.fkcuUJp9uhxKdoGniDk3V0quSpwMZL2gr8GcxMXCYgQ';
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// Função para realizar o login
-document.getElementById('form-login').addEventListener('submit', async (event) => {
-    event.preventDefault();
+// Função utilitária para exibir mensagens
+const showMessage = (message, isError = true) => {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${isError ? 'error' : 'success'}`;
+    alertDiv.textContent = message;
+    document.body.prepend(alertDiv);
+    setTimeout(() => alertDiv.remove(), 5000);
+};
 
-    const email = document.getElementById('login-email').value;
-    const senha = document.getElementById('login-senha').value;
+// Login
+document.getElementById('form-login')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('login-email').value.trim();
+    const senha = document.getElementById('login-senha').value.trim();
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: senha,
-    });
+    if (!email || !senha) {
+        showMessage('Preencha todos os campos!');
+        return;
+    }
 
-    if (error) {
-        alert('Erro ao fazer login: ' + error.message);
-    } else {
-        alert('Login realizado com sucesso!');
-        // Redirecionar para a página de cursos ou outra página após o login
-        window.location.href = 'cursos.html';
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password: senha });
+        
+        if (error) throw error;
+        
+        showMessage('Login realizado! Redirecionando...', false);
+        setTimeout(() => window.location.href = 'cursos.html', 2000);
+        
+    } catch (error) {
+        console.error('Erro login:', error);
+        showMessage(`Falha no login: ${error.message}`);
     }
 });
 
-// Função para realizar o cadastro
-document.getElementById('form-cadastro').addEventListener('submit', async (event) => {
-    event.preventDefault();
+// Cadastro
+document.getElementById('form-cadastro')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const senha = document.getElementById('senha').value.trim();
 
-    const nome = document.getElementById('nome').value;
-    const email = document.getElementById('email').value;
-    const senha = document.getElementById('senha').value;
+    if (!nome || !email || !senha) {
+        showMessage('Preencha todos os campos!');
+        return;
+    }
 
-    const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: senha,
-        options: {
-            data: {
-                nome: nome,
-            },
-        },
-    });
+    if (senha.length < 6) {
+        showMessage('Senha deve ter no mínimo 6 caracteres!');
+        return;
+    }
 
-    if (error) {
-        alert('Erro ao cadastrar: ' + error.message);
-    } else {
-        alert('Cadastro realizado com sucesso! Verifique seu e-mail para confirmar.');
-        // Redirecionar para a página de login após o cadastro
-        window.location.href = 'index.html#login';
+    try {
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password: senha,
+            options: {
+                data: { nome },
+                emailRedirectTo: window.location.href
+            }
+        });
+
+        if (error) throw error;
+        
+        showMessage('Cadastro realizado! Verifique seu e-mail.', false);
+        document.getElementById('form-cadastro').reset();
+        
+    } catch (error) {
+        console.error('Erro cadastro:', error);
+        showMessage(`Erro no cadastro: ${error.message}`);
     }
 });
