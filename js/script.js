@@ -47,3 +47,32 @@ document.getElementById('form-cadastro').addEventListener('submit', async functi
         alert('Erro no cadastro: ' + (error.message || "Erro desconhecido"));
     }
 });
+
+document.getElementById('form-login').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const senha = document.getElementById('login-senha').value;
+
+    try {
+        console.log("Iniciando login...");
+
+        // Passo 1: Autenticar o usuário no Supabase Auth
+        const { user, error: authError } = await client.auth.signIn({ 
+            email, 
+            password: senha 
+        });
+
+        console.log("Resposta do Supabase Auth:", { user, authError });
+
+        if (authError) {
+            throw new Error(authError.message || "Erro ao autenticar usuário");
+        }
+
+        alert('Login realizado com sucesso!');
+        window.location.href = 'cursos.html';
+
+    } catch (error) {
+        console.error("Detalhes do erro:", error);
+        alert('Erro no login: ' + (error.message || "Erro desconhecido"));
+    }
+});
